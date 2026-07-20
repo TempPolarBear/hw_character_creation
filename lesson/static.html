@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Робота со статикой</title>
+</head>
+<body>
+
+<script>
+// Вспомогательный класс с полезными методами
+class AgeHelper {
+
+    // Проверка на совершеннолетие
+    static isAdult(age) {
+        return age >= 18;
+    }
+
+    // Проверка на пенсионный возраст
+    static isPensioner(age) {
+        return age >= 60;
+    }
+
+    // Проверка на корректность возраста
+    static isValid(age) {
+        return age >= 0 && age <= 120;
+    }
+}
+
+const age = Number(prompt("Введите возраст"));
+
+// Используем статические методы без создания объекта
+if (!AgeHelper.isValid(age)) {
+    alert("Возраст введен неверно");
+} else {
+    alert(
+        `Совершеннолетний: ${AgeHelper.isAdult(age)}\n` +
+        `Пенсионный возраст: ${AgeHelper.isPensioner(age)}`
+    );
+}
+</script>
+
+</body>
+</html>

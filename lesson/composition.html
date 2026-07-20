@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Работа с композицией</title>
+</head>
+<body>
+
+<script>
+class Heart {
+    work()
+    {
+        return "Сердце работает"
+    }
+}
+
+class Lungs {
+    work()
+    {
+        return "Легкие работают"
+    }
+}
+
+class Kidneys {
+    work()
+    {
+        return "Почки работают"
+    }
+}
+
+class Brain {
+    work()
+    {
+        return "Мозг работает"
+    }
+}
+
+// Класс Human использует композицию для включения других органов
+class Human {
+    #heart
+    #lungs
+    #kidneys
+    #brain
+
+    // Конструктор класса Human создает экземпляры органов
+    constructor() {
+        this.#heart = new Heart()
+        this.#lungs = new Lungs()
+        this.#kidneys = new Kidneys()
+        this.#brain = new Brain()
+    }
+
+    // Метод live() вызывает метод work() каждого органа и возвращает их состояния
+    live() {
+        return `${this.#heart.work()}, ${this.#lungs.work()}, ${this.#kidneys.work()}, ${this.#brain.work()}`;
+    }
+}
+
+const human = new Human()
+alert(human.live())
+</script>
+
+</body>
+</html>
