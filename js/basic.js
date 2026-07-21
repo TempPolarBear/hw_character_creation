@@ -389,6 +389,28 @@ createCharacterBtn.addEventListener("click", function () {
     );
 
     characters.push(character);
+    characterList.innerHTML = "";
+    characters.forEach((character) => {
+    characterList.innerHTML += `
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+
+                    <h5 class="card-title">
+                        ⚔️ ${character.name}
+                        ${CharacterHelper.isLegendary(character) ? "⭐" : ""}
+                    </h5>
+
+                    <p><strong>Class:</strong> ${character.characterClass}</p>
+                    <p><strong>Attack:</strong> ${character.attack}</p>
+                    <p><strong>Defense:</strong> ${character.defense}</p>
+                    <p><strong>Magic:</strong> ${character.magic}</p>
+
+                </div>
+            </div>
+        </div>
+        `;
+    });
     document.querySelector("#characterModalBody").innerHTML = `
             <h1 class="text-center mb-3">
                 ⚔️ ${character.name} ${CharacterHelper.isLegendary(character) ? "⭐" : ""} ⚔️
