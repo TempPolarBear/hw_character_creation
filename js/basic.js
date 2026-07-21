@@ -218,47 +218,26 @@ class CharacterHelper {
 
 function getRarityBadge(rarity) {
     switch (rarity) {
-
         case "Common":
-
-            return `<span class="badge bg-secondary">${rarity}</span>`;
-
-
+            return `<span class="badge bg-secondary">⚪ Common</span>`;
 
         case "Uncommon":
-
-            return `<span class="badge bg-success">${rarity}</span>`;
-
-
+            return `<span class="badge bg-success">🟢 Uncommon</span>`;
 
         case "Rare":
-
-            return `<span class="badge bg-primary">${rarity}</span>`;
-
-
+            return `<span class="badge bg-primary">🔵 Rare</span>`;
 
         case "Epic":
-
-            return `<span class="badge text-bg-dark">${rarity}</span>`;
-
-
+            return `<span class="badge bg-dark">🟣 Epic</span>`;
 
         case "Legendary":
-
-            return `<span class="badge bg-warning text-dark">${rarity}</span>`;
-
-
+            return `<span class="badge bg-warning text-dark">⭐ Legendary</span>`;
 
         case "Mythical":
-
-            return `<span class="badge bg-danger">${rarity}</span>`;
-
-
+            return `<span class="badge bg-danger">🔥 Mythical</span>`;
 
         default:
-
             return rarity;
-
     }
 }
 
@@ -411,45 +390,67 @@ createCharacterBtn.addEventListener("click", function () {
 
     characters.push(character);
     document.querySelector("#characterModalBody").innerHTML = `
-        <h3>${character.name} ${CharacterHelper.isLegendary(character) ? "⭐" : ""}</h3>
+            <h1 class="text-center mb-3">
+                ⚔️ ${character.name} ${CharacterHelper.isLegendary(character) ? "⭐" : ""} ⚔️
+            </h1>
 
-        <p><strong>Class:</strong> ${character.characterClass}</p>
+            <h5 class="text-center text-muted mb-4">
+                ${character.characterClass}
+            </h5>
 
-        <hr>
+            <h4 class="text-center mb-3">
+                📊 Character Statistics
+            </h4>
 
-        <p><strong>⚔️ Attack:</strong> ${character.attack}</p>
-        <p><strong>🛡️ Defense:</strong> ${character.defense}</p>
-        <p><strong>✨ Magic:</strong> ${character.magic}</p>
-        <p><strong>💰 Gold:</strong> ${character.gold}</p>
+        <div class="card border-dark mb-3">
+            <div class="card-header fw-bold">
+                📊 Statistics
+            </div>
 
-        <hr>
+            <div class="card-body">
+                <p>⚔️ Attack: ${character.attack}</p>
+                <p>🛡️ Defense: ${character.defense}</p>
+                <p>✨ Magic: ${character.magic}</p>
+                <p>💰 Gold: ${character.gold}</p>
+            </div>
+        </div>
 
-        <h5>⚔️ Weapon</h5>
+        <div class="card border-danger mb-3">
+            <div class="card-header fw-bold">⚔️ Weapon</div>
 
-        <p><strong>Type:</strong> ${character.weapon.type}</p>
-        <p><strong>Damage:</strong> ${character.weapon.damage}</p>
-        <p><strong>Durability:</strong> ${character.weapon.durability}</p>
-        <p><strong>Rarity:</strong> ${getRarityBadge(character.weapon.rarity)}</p>
+            <div class="card-body">
+                <p>Type: ${weapon.type}</p>
+                <p><b>Damage:</b> ${weapon.damage}</p>
+                <p>Durability: ${weapon.durability}</p>
+                <p>Enchantment: ${weapon.enchantment}</p>
+                <p>Rarity: ${getRarityBadge(weapon.rarity)}</p>
+            </div>
+        </div>
+
+        <div class="card border-primary mb-3">
+            <div class="card-header fw-bold"> 🛡️ Armor </div>
+
+            <div class="card-body">
+                <p>Type: ${armor.type}</p>
+                <p>Material: ${armor.material}</p>
+                <p>Defense: ${armor.defense}</p>
+                <p>Durability: ${armor.durability}</p>
+                <p>Enchantment: ${armor.enchantment}</p>
+                <p>Rarity: ${getRarityBadge(armor.rarity)}</p>
+            </div>
+        </div>
+
+        <div class="card border-success mb-3">
+            <div class="card-header fw-bold"> 🐾 Pet </div>
         
-        <hr>
-
-        <h5>🛡️ Armor</h5>
-
-        <p><strong>Type:</strong> ${character.armor.type}</p>
-        <p><strong>Material:</strong> ${character.armor.material}</p>
-        <p><strong>Defense:</strong> ${character.armor.defense}</p>
-        <p><strong>Durability:</strong> ${character.armor.durability}</p>
-        <p><strong>Rarity:</strong> ${getRarityBadge(character.armor.rarity)}</p>
-
-        <hr>
-
-        <h5>🐾 Pet</h5>
-
-        <p><strong>Name:</strong> ${character.pet.name}</p>
-        <p><strong>Species:</strong> ${character.pet.species}</p>
-        <p><strong>Attack:</strong> ${character.pet.attack}</p>
-        <p><strong>Buff:</strong> ${character.pet.buff}</p>
-        <p><strong>Rarity:</strong> ${getRarityBadge(character.pet.rarity)}</p>
+            <div class="card-body">
+                <p>Name: ${pet.name}</p>
+                <p>Species: ${pet.species}</p>
+                <p>Buff: ${pet.buff}</p>
+                <p>Attack: ${pet.attack}</p>
+                <p>Rarity: ${getRarityBadge(pet.rarity)}</p>
+            </div>
+        </div>
         `;
         
     const modal = new bootstrap.Modal(document.querySelector("#characterModal"));
@@ -457,36 +458,43 @@ createCharacterBtn.addEventListener("click", function () {
     const modalHeader = document.querySelector(".modal-header");
 
     modalTitle.className = "modal-title";
+    modalHeader.className = "modal-header";
 
-    if (character.weapon.rarity === "Common")  {
+    if (character.weapon.rarity === "Common") {
         modalTitle.classList.add("text-secondary");
+        modalHeader.classList.add("bg-secondary", "text-white");
         modalTitle.innerHTML = "⚪ Common Character";
     }
 
-    if (character.weapon.rarity === "Uncommon"){
+    if (character.weapon.rarity === "Uncommon") {
         modalTitle.classList.add("text-success");
+        modalHeader.classList.add("bg-success", "text-white");
         modalTitle.innerHTML = "🟢 Uncommon Character";
     }
 
     if (character.weapon.rarity === "Rare") {
         modalTitle.classList.add("text-primary");
+        modalHeader.classList.add("bg-primary", "text-white");
         modalTitle.innerHTML = "🔵 Rare Character";
     }
 
     if (character.weapon.rarity === "Epic") {
         modalTitle.classList.add("text-dark");
+        modalHeader.classList.add("bg-dark", "text-white");
         modalTitle.innerHTML = "🟣 Epic Character";
     }
 
     if (character.weapon.rarity === "Legendary") {
         modalTitle.classList.add("text-warning");
+        modalHeader.classList.add("bg-warning");
         modalTitle.innerHTML = "⭐ Legendary Character";
     }
 
     if (character.weapon.rarity === "Mythical") {
-    modalTitle.classList.add("text-danger");
-    modalTitle.innerHTML = "🔥 Mythical Character";
-}
+        modalTitle.classList.add("text-danger");
+        modalHeader.classList.add("bg-danger", "text-white");
+        modalTitle.innerHTML = "🔥 Mythical Character";
+    }
 
 modal.show();
 
