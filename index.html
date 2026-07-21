@@ -54,22 +54,22 @@ Character - будет состоять из объектов Weapon, Armor и P
 
                         <div class="mb-3">
                             <label for="characterAttack" class="form-label">Base Attack:</label>
-                            <input type="number" id="characterAttack" class="form-control" placeholder="Enter base attack">
+                            <input type="number" id="characterAttack" class="form-control" placeholder="Enter base attack" readonly>
                         </div>
 
                         <div class="mb-3">
                             <label for="characterDefense" class="form-label">Base Defense:</label>
-                            <input type="number" id="characterDefense" class="form-control" placeholder="Enter base defense">
+                            <input type="number" id="characterDefense" class="form-control" placeholder="Enter base defense" readonly>
                         </div>
 
                         <div class="mb-3">
                             <label for="characterMagic" class="form-label">Magic:</label>
-                            <input type="number" id="characterMagic" class="form-control" placeholder="Enter magic">
+                            <input type="number" id="characterMagic" class="form-control" placeholder="Enter magic" readonly>
                         </div>
 
                         <div class="mb-3">
                             <label for="characterGold" class="form-label">Gold:</label>
-                            <input type="number" id="characterGold" class="form-control" placeholder="Enter gold">
+                            <input type="number" id="characterGold" class="form-control" placeholder="Enter gold" readonly>
                         </div>
                     </div>
                 </div>
@@ -98,12 +98,12 @@ Character - будет состоять из объектов Weapon, Armor и P
 
                         <div class="mb-3">
                             <label for="weaponDamage" class="form-label">Damage:</label>
-                            <input type="number" id="weaponDamage" class="form-control" placeholder="Enter weapon damage">
+                            <input type="number" id="weaponDamage" class="form-control" placeholder="Enter weapon damage" readonly>
                         </div>
 
                         <div class="mb-3">
                             <label for="weaponDurability" class="form-label">Durability:</label>
-                            <input type="number" id="weaponDurability" class="form-control" placeholder="Enter weapon durability">
+                            <input type="number" id="weaponDurability" class="form-control" placeholder="Enter weapon durability" readonly>
                         </div>
 
                         <div class="mb-3">
@@ -113,7 +113,7 @@ Character - будет состоять из объектов Weapon, Armor и P
 
                         <div class="mb-3">
                             <label for="weaponRarity" class="form-label">Rarity:</label>
-                            <select class="form-select" id="weaponRarity">
+                            <select class="form-select" id="weaponRarity" disabled>
                                 <option selected disabled>Select rarity</option>
                                 <option value="Common">Common</option>
                                 <option value="Uncommon">Uncommon</option>
@@ -163,12 +163,12 @@ Character - будет состоять из объектов Weapon, Armor и P
 
                         <div class="mb-3">
                             <label for="armorDefense" class="form-label">Defense:</label>
-                            <input type="number" id="armorDefense" class="form-control" placeholder="Enter armor defense">
+                            <input type="number" id="armorDefense" class="form-control" placeholder="Enter armor defense" readonly>
                         </div>
 
                         <div class="mb-3">
                             <label for="armorDurability" class="form-label">Durability:</label>
-                            <input type="number" id="armorDurability" class="form-control" placeholder="Enter armor durability">
+                            <input type="number" id="armorDurability" class="form-control" placeholder="Enter armor durability" readonly>
                         </div>
 
                         <div class="mb-3">
@@ -178,7 +178,7 @@ Character - будет состоять из объектов Weapon, Armor и P
 
                         <div class="mb-3">
                             <label for="armorRarity" class="form-label">Rarity:</label>
-                            <select class="form-select" id="armorRarity">
+                            <select class="form-select" id="armorRarity" disabled>
                                 <option selected disabled>Select rarity</option>
                                 <option value="Common">Common</option>
                                 <option value="Uncommon">Uncommon</option>
@@ -221,12 +221,12 @@ Character - будет состоять из объектов Weapon, Armor и P
 
                         <div class="mb-3">
                             <label for="petBuff" class="form-label">Buff:</label>
-                            <input type="text" id="petBuff" class="form-control" placeholder="Enter pet buff">
+                            <input type="text" id="petBuff" class="form-control" placeholder="Enter pet buff" readonly>
                         </div>
 
                         <div class="mb-3">
                             <label for="petRarity" class="form-label">Rarity:</label>
-                            <select class="form-select" id="petRarity">
+                            <select class="form-select" id="petRarity" disabled>
                                 <option selected disabled>Select rarity</option>
                                 <option value="Common">Common</option>
                                 <option value="Uncommon">Uncommon</option>
@@ -239,7 +239,7 @@ Character - будет состоять из объектов Weapon, Armor и P
 
                         <div class="mb-3">
                             <label for="petAttack" class="form-label">Attack:</label>
-                            <input type="number" id="petAttack" class="form-control" placeholder="Enter pet attack">
+                            <input type="number" id="petAttack" class="form-control" placeholder="Enter pet attack" readonly>
                         </div>
 
                     </div>
@@ -254,6 +254,41 @@ Character - будет состоять из объектов Weapon, Armor и P
             </button>
         </div>
     </div>
-    <script src="js/basic.js"></script>
+
+<div class="modal fade" id="characterModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitle">Character Created</h5>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal">
+                </button>
+            </div>
+
+            <div class="modal-body" id="characterModalBody">
+
+            </div>
+
+            <div class="modal-footer">
+                <button
+                    class="btn btn-primary"
+                    data-bs-dismiss="modal">
+                    Close
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/js/bootstrap.bundle.min.js"></script>
+
+<script src="js/basic.js"></script>
+    
 </body>
 </html>
