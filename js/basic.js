@@ -32,7 +32,7 @@
 
 const rarities = ["Common","Uncommon","Rare","Epic","Legendary","Mythical"];
 const buffs = ["+10 Attack","+10 Defense","+15 Magic","+20 Health","+5 Speed","Critical Chance +10%"];
-
+const enchantments = ["None","Fire","Ice","Lightning","Poison","Holy","Darkness"];
 
 class Character {
     #name;
@@ -277,14 +277,16 @@ function generateWeaponStats() {
     const damage = Math.floor(Math.random() * 21) + 15; // 15-35
     const durability = Math.floor(Math.random() * 31) + 70; // 70-100
     const rarity = rarities[Math.floor(Math.random() * rarities.length)]; 
-    return { damage, durability, rarity };  
+    const enchantment = enchantments[Math.floor(Math.random() * enchantments.length)];
+    return { damage, durability, rarity, enchantment };  
 }
 
 function generateArmorStats() {
     const defense = Math.floor(Math.random() * 21) + 10; // 10-30
     const durability = Math.floor(Math.random() * 31) + 70; // 70-100   
     const rarity = rarities[Math.floor(Math.random() * rarities.length)]; 
-    return { defense, durability, rarity };  
+    const enchantment = enchantments[Math.floor(Math.random() * enchantments.length)];
+    return { defense, durability, rarity, enchantment };  
 }   
 
 function generatePetStats() {
@@ -308,6 +310,52 @@ function generatePetStats() {
         document.querySelector("#characterMagic").value = characterStats.magic;
         document.querySelector("#characterGold").value = characterStats.gold;
     });
+    function renderCharacters() {
+    characterList.innerHTML = "";
+
+    characters.forEach((character, index) => {
+        characterList.innerHTML += `
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+
+                    <h5 class="card-title">
+                        ⚔️ ${character.name}
+                        ${CharacterHelper.isLegendary(character) ? "⭐" : ""}
+                    </h5>
+
+                    <p><strong>Class:</strong> ${character.characterClass}</p>
+                    <p><strong>Attack:</strong> ${character.attack}</p>
+                    <p><strong>Defense:</strong> ${character.defense}</p>
+                    <p><strong>Magic:</strong> ${character.magic}</p>
+
+                    <p><strong>Weapon:</strong> ${character.weapon.type}</p>
+                    <p><strong>Enchantment:</strong> ${character.weapon.enchantment}</p>
+                    <p><strong>Rarity:</strong> ${getRarityBadge(character.weapon.rarity)}</p>
+
+                    <button
+                        class="btn btn-outline-danger btn-sm mt-3 w-100 delete-btn"
+                        data-index="${index}">
+                        <i class="bi bi-trash"></i> Delete
+                    </button>
+
+                </div>
+            </div>
+        </div>
+        `;
+    });
+
+    document.querySelectorAll(".delete-btn").forEach(button => {
+        button.addEventListener("click", function () {
+
+            const index = Number(this.dataset.index);
+
+            characters.splice(index, 1);
+
+            renderCharacters();
+        });
+    });
+}
 
 createCharacterBtn.addEventListener("click", function () {
 
@@ -317,12 +365,10 @@ createCharacterBtn.addEventListener("click", function () {
 
     // Weapon
     const weaponType = document.querySelector("#weaponType").value;
-    const weaponEnchantment = document.querySelector("#weaponEnchantment").value;
 
     // Armor
     const armorType = document.querySelector("#armorType").value;
     const armorMaterial = document.querySelector("#armorMaterial").value;
-    const armorEnchantment = document.querySelector("#armorEnchantment").value;
 
     // Pet
     const petName = document.querySelector("#petName").value;
@@ -336,13 +382,17 @@ createCharacterBtn.addEventListener("click", function () {
         gold: Number(document.querySelector("#characterGold").value)
     };
     const weaponStats = generateWeaponStats();
+
     document.querySelector("#weaponDamage").value = weaponStats.damage;
     document.querySelector("#weaponDurability").value = weaponStats.durability;
+    document.querySelector("#weaponEnchantment").value = weaponStats.enchantment;
     document.querySelector("#weaponRarity").value = weaponStats.rarity;
 
     const armorStats = generateArmorStats();
+
     document.querySelector("#armorDefense").value = armorStats.defense;
     document.querySelector("#armorDurability").value = armorStats.durability;
+    document.querySelector("#armorEnchantment").value = armorStats.enchantment;
     document.querySelector("#armorRarity").value = armorStats.rarity;
 
     const petStats = generatePetStats();
@@ -355,7 +405,7 @@ createCharacterBtn.addEventListener("click", function () {
         weaponType,
         weaponStats.damage,
         weaponStats.durability,
-        weaponEnchantment,
+        weaponStats.enchantment,
         weaponStats.rarity
     );
 
@@ -364,7 +414,7 @@ createCharacterBtn.addEventListener("click", function () {
         armorMaterial,
         armorStats.defense,
         armorStats.durability,
-        armorEnchantment,
+        armorStats.enchantment,
         armorStats.rarity
     );
 
@@ -389,28 +439,7 @@ createCharacterBtn.addEventListener("click", function () {
     );
 
     characters.push(character);
-    characterList.innerHTML = "";
-    characters.forEach((character) => {
-    characterList.innerHTML += `
-        <div class="col-md-4">
-            <div class="card shadow-sm h-100">
-                <div class="card-body">
-
-                    <h5 class="card-title">
-                        ⚔️ ${character.name}
-                        ${CharacterHelper.isLegendary(character) ? "⭐" : ""}
-                    </h5>
-
-                    <p><strong>Class:</strong> ${character.characterClass}</p>
-                    <p><strong>Attack:</strong> ${character.attack}</p>
-                    <p><strong>Defense:</strong> ${character.defense}</p>
-                    <p><strong>Magic:</strong> ${character.magic}</p>
-
-                </div>
-            </div>
-        </div>
-        `;
-    });
+    renderCharacters();
     document.querySelector("#characterModalBody").innerHTML = `
             <h1 class="text-center mb-3">
                 ⚔️ ${character.name} ${CharacterHelper.isLegendary(character) ? "⭐" : ""} ⚔️
@@ -519,6 +548,36 @@ createCharacterBtn.addEventListener("click", function () {
     }
 
 modal.show();
+
+// Character
+document.querySelector("#characterName").value = "";
+document.querySelector("#characterClass").selectedIndex = 0;
+document.querySelector("#characterAttack").value = "";
+document.querySelector("#characterDefense").value = "";
+document.querySelector("#characterMagic").value = "";
+document.querySelector("#characterGold").value = "";
+
+// Weapon
+document.querySelector("#weaponType").selectedIndex = 0;
+document.querySelector("#weaponDamage").value = "";
+document.querySelector("#weaponDurability").value = "";
+document.querySelector("#weaponEnchantment").value = "";
+document.querySelector("#weaponRarity").selectedIndex = 0;
+
+// Armor
+document.querySelector("#armorType").selectedIndex = 0;
+document.querySelector("#armorMaterial").selectedIndex = 0;
+document.querySelector("#armorDefense").value = "";
+document.querySelector("#armorDurability").value = "";
+document.querySelector("#armorEnchantment").value = "";
+document.querySelector("#armorRarity").selectedIndex = 0;
+
+// Pet
+document.querySelector("#petName").value = "";
+document.querySelector("#petSpecies").selectedIndex = 0;
+document.querySelector("#petBuff").value = "";
+document.querySelector("#petAttack").value = "";
+document.querySelector("#petRarity").selectedIndex = 0;
 
 console.log(characters);
 
